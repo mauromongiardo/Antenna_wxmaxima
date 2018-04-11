@@ -1,0 +1,26 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+/* By using this block you can use directly J instead of %i as unit imaginary part !!!! */
+block([simp:false],
+           
+?putprop(%i,?j,'?texword),
+           
+?aliaslist: ?list(?cons(%i,j)),
+           
+alias(j,%i))$
+
+float(%gamma);
+
+z:5.0;
+Ci : float(expintegral_ci (z))  ;
+C[in] : - Ci + float(log(z)) + float(%gamma);
+
+print("bye")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

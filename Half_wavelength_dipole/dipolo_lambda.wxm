@@ -1,0 +1,48 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+print("Integral computation")$
+assume(ct > 0);
+assume(ct < 1);
+
+k : 2 * %pi /%lambda[0];
+
+f : %e^(%i *k * zp *ct);
+
+pexp : cos(k * zp);
+pexp :exponentialize(pexp);
+
+print("Try to evaluate the integral")$
+int : integrate(f*pexp,zp,- %lambda[0]/4,%lambda[0]/4);
+print("now substiute ct with cos(theta)")$
+int : substitute(cos(%theta),ct,int);
+
+print("and apply trigsimp to simplify the above expression")$
+int : trigsimp(int);
+
+print("to proceed further separate numerator and denominator")$
+numint : num(int);
+denint : denom(int);
+
+print("and apply trigreduce to numerator")$
+numint : trigreduce(numint);
+
+print("now convert the numerator into rectform")$
+numint : rectform(numint);
+print("finally obtaining")$
+final : numint/denint;
+
+print("Once the integral has been evaluated multiply by the terms")$
+
+green : %e^(-%i *k * r) / (4 * %pi *r)$
+ff : %i * green * sin(%theta) * k * Z[0] *I[0];
+ffinal : ff * final;
+
+print("Bye")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

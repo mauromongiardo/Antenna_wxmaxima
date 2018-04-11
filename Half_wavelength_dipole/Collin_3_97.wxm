@@ -1,0 +1,22 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+assume (%lambda > 0);
+assume (n > 0);
+
+print(" Trying to derive the expressions 3.97")$
+k : 2 * %pi /%lambda;
+f[1] : sin(k*x);
+f[2] : %e^(-%i * k * x * cos(%psi));
+
+const : %i * k * Z[0] * sin(%psi) *I[0] * %e^( - %i * k * r)/(4 * %pi * r);
+
+ f :  f[1] * f[2];
+ fint : integrate(f,x,0,n*%lambda/2);
+fint : trigsimp(fint);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

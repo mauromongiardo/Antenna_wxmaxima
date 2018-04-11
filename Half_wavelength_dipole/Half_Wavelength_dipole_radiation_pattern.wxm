@@ -1,0 +1,61 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+fpprintprec :5$
+
+print("Draw the E-plane radiation pattern of a half-wavelength dipole placed horizontally")$
+
+f : (cos(%pi/2 * cos(x))/sin(x))^2;
+
+eqHpbw : (cos(%pi/2 * cos(theta))/sin(theta))^2 -1/2;
+
+eqHpbw : (cos(%pi/2 * cos(theta))) -1/sqrt(2) *sin(theta);
+
+result :  find_root(eqHpbw, theta, 0, %pi);
+
+print(" result in degrees")$
+res : result*180/float(%pi);
+/*
+z2 : rhs(zeros[2]);
+z1 : rhs(zeros[1]);
+*/
+
+print("Half Power Beam Width")$
+HPBW : 2*(res-90);
+
+print("Now plot the Radiation Pattern")$
+
+/*
+wxdraw2d(user_preamble = "set grid polar",
+ nticks = 200,
+ xrange = [-1,1], yrange = [-1,1],
+ 
+color = blue, line_width = 1,
+ title = "Hertz dipole",
+ 
+polar((sin(theta))^2,theta,-%pi,%pi) )$
+*/
+
+wxdraw2d(user_preamble = "set grid polar",
+ nticks = 200,
+ xrange = [-1,1], yrange = [-1,1],
+ 
+color = blue, line_width = 1,
+ title = "Hertz dipole (blue line) vs halfwavelength (red line)",
+ polar((sin(theta))^2,theta,-%pi,%pi),
+
+color = red, line_width = 1,
+polar(f,x,-%pi*0.99,%pi*0.99 ))$
+
+
+print("Bye")$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+limit((cos(%pi/2 * cos(x))/sin(x))^2, x, 0);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

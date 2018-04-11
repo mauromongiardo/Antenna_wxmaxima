@@ -1,0 +1,33 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 14.12.1 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+fpprintprec : 5  $
+ratprint : false $
+
+print("Evaluation of radiated power for half-wavelength dipole")$
+print("cfr. eq. 2.57 Collin")$
+
+f : (cos(%pi/2 * cos(%theta)))^2/sin(%theta);
+integrate(f,%theta,0,%pi);
+print("Failed to integrate analytically")$
+
+print("Try numerical integration")$
+intres : quad_qags(f, %theta, 0, %pi);
+intval : intres[1];
+const : 120 * %pi /(8 * %pi^2) *2 * %pi * (cabs(I[0]))^2 ;
+final : const *intval;
+P[r] : final$
+print('P[r]," = ",P[r])$
+
+print("radiation resistance computation")$
+eq1 : final - 1/2 * R[a] * (cabs(I[0]))^2$
+radres : solve(eq1,R[a])$
+R[a] : rhs(radres[1])$
+R[a] : float(R[a])$
+print('R[a]," = ",R[a])$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
