@@ -1,0 +1,33 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+fpprintprec :6$
+
+print("Fields region of an antenna")$
+R[1] : 0.62 * sqrt(D^3/%lambda)$
+R[2]: 2 * D^2/%lambda$
+print('R[1]," = ",R[1])$
+print('R[2]," = ",R[2])$
+
+print("Example")$
+f : 10 * 10^9$
+print("frequency (GHz) = ",f/10^9)$
+c : 2.997 * 10^8$
+D : 0.5 $
+%lambda : c/f$
+R[1] : 0.62 * sqrt(D^3/%lambda)$
+R[2]: 2 * D^2/%lambda$
+
+print('D," = ",D)$
+print('%lambda," = ",%lambda)$
+
+print('R[1]," = ",R[1])$
+print('R[2]," = ",R[2])$
+
+print("Bye")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
