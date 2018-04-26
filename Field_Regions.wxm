@@ -1,5 +1,5 @@
 /* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
-/* [ Created with wxMaxima version 11.08.0 ] */
+/* [ Created with wxMaxima version 16.04.2 ] */
 
 /* [wxMaxima: input   start ] */
 kill(all)$
@@ -26,7 +26,7 @@ print('%lambda," = ",%lambda)$
 print('R[1]," = ",R[1])$
 print('R[2]," = ",R[2])$
 
-print("Bye")$
+print("Bye Bye")$
 /* [wxMaxima: input   end   ] */
 
 /* Maxima can't load/batch files which end with a comment! */
