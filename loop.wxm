@@ -1,0 +1,37 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+fpprintprec:4$
+
+print("_________________________________________________")$
+print("Program: loop")$
+print("_________________________________________________")$
+
+r[0] : 2*10^-2$ /*m*/
+r : 2$ /*m*/
+f : 2*10^9$ /*Hz*/
+c : 3*10^8$ /*m/s*/
+%lambda : c/f$ /*m*/
+k : 2*%pi/%lambda$
+%theta : 45$
+M : %pi*(r[0]^2)*I$
+
+print("")$
+
+A : ratsimp(%i*((k*%mu)/(4*%pi*r))*(%pi*r[0]^2*I)*sin(%pi/4)*exp(-%i*k*r));
+print("");
+H : ratsimp(-((M*k^2)/(4*%pi))*sin(%pi/4)*(1/r)*exp(-%i*k*r));
+print("")$
+E : ratsimp(((M*k^2)/(4*%pi))*Z[0]*sin(%pi/4)*(1/r)*exp(-%i*k*r));
+print("")$
+Pr : ratsimp(((M^2)*Z[0]*k^4)/(12*%pi));
+Pr : ratsimp(((M^2)*Z[0]*k^4)/(12*%pi)),numer;
+print("")$
+Ra : 320*%pi^6*(r[0]/%lambda)^4,numer;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
