@@ -1,0 +1,104 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+print("_______________________________________________")$
+print("Program: Gamma_matrices")$
+print("_______________________________________________")$
+
+print("")$
+print("Here we want to demonstrate the properties of gamma matrices.")$
+print("First of all we show both sigma and gamma matrices in the following:")$
+print("")$
+
+/* Sigma matrices */
+
+s0: matrix([1,0],[0,1])$
+s1: matrix([0,1],[1,0])$
+s2: matrix([0,-%i],[%i,0])$
+s3: matrix([1,0],[0,-1])$
+
+/* Definition of gamma matrices through Kronecker product */
+
+g0: kronecker_product(s3, s0)$
+g1: kronecker_product(%i*s2, s1)$
+g2: kronecker_product(%i*s2, s2)$
+g3: kronecker_product(%i*s2, s3)$
+print('g0," = ",g0)$
+print('g1," = ",g1)$
+print('g2," = ",g2)$
+print('g3," = ",g3)$
+
+/* Properties */
+
+print("")$
+print("Now we compute the products between gamma matrices in order to demonstrate some properties.")$
+print("")$
+print("PROPERTY 1")$
+print("")$
+
+G[0]: g0.g0$
+G[1]: g1.g1$
+G[2]: g2.g2$
+G[3]: g3.g3$
+print('(g0.g0)," = ",G[0]," = ",I[4])$
+print('(g1.g1)," = ",G[1]," = ",-I[4])$
+print('(g2.g2)," = ",G[2]," = ",-I[4])$
+print('(g3.g3)," = ",G[3]," = ",-I[4])$
+
+print("_______________________________________________")$
+print("")$
+print("PROPERTY 2")$
+print("")$
+
+G[01]: g0.g1$
+G[02]: g0.g2$
+G[03]: g0.g3$
+print('(g0.g1)," = ",G[01]," = ", matrix([0, '(%sigma[1])], ['(%sigma[1]), 0]))$
+print('(g0.g2)," = ",G[02]," = ", matrix([0, '(%sigma[2])], ['(%sigma[2]), 0]))$
+print('(g0.g3)," = ",G[03]," = ", matrix([0, '(%sigma[3])], ['(%sigma[3]), 0]))$
+
+print("_______________________________________________")$
+print("")$
+print("PROPERTY 3")$
+print("")$
+
+G[10]: g1.g0$
+G[20]: g2.g0$
+G[30]: g3.g0$
+print('(g1.g0)," = ",G[10]," = ",-matrix([0, '(%sigma[1])], ['(%sigma[1]), 0]))$
+print('(g2.g0)," = ",G[20]," = ",-matrix([0, '(%sigma[2])], ['(%sigma[2]), 0]))$
+print('(g3.g0)," = ",G[30]," = ",-matrix([0, '(%sigma[3])], ['(%sigma[3]), 0]))$
+
+print("_______________________________________________")$
+print("")$
+print("PROPERTY 4")$
+print("")$
+
+G[12]: g1.g2$
+G[23]: g2.g3$
+G[13]: g1.g3$
+print('(g1.g2)," = ",G[12]," = ",-matrix(['(%sigma[1].%sigma[2]), 0], [0, '(%sigma[1].%sigma[2])]))$
+print('(g2.g3)," = ",G[23]," = ",-matrix(['(%sigma[2].%sigma[3]), 0], [0, '(%sigma[2].%sigma[3])]))$
+print('(g1.g3)," = ",G[13]," = ",-matrix(['(%sigma[1].%sigma[3]), 0], [0, '(%sigma[1].%sigma[3])]))$
+
+print("_______________________________________________")$
+print("")$
+print("PROPERTY 5")$
+print("")$
+
+G[21]: g2.g1$
+G[32]: g3.g2$
+G[31]: g3.g1$
+print('(g2.g1)," = ",G[21]," = ",matrix(['(%sigma[1].%sigma[2]), 0], [0, '(%sigma[1].%sigma[2])]))$
+print('(g3.g2)," = ",G[32]," = ",matrix(['(%sigma[2].%sigma[3]), 0], [0, '(%sigma[2].%sigma[3])]))$
+print('(g3.g1)," = ",G[31]," = ",matrix(['(%sigma[1].%sigma[3]), 0], [0, '(%sigma[1].%sigma[3])]))$
+
+print("")$
+print("End")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
