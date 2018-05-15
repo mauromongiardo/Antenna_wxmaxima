@@ -1,0 +1,120 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+print("_______________________________________________")$
+print("Program: Dslash")$
+print("_______________________________________________")$
+
+/* Sigma matrices */
+
+s0: matrix([1,0],[0,1])$
+s1: matrix([0,1],[1,0])$
+s2: matrix([0,-%i],[%i,0])$
+s3: matrix([1,0],[0,-1])$
+
+/* Definition of gamma matrices through Kronecker product */
+
+g0: kronecker_product(s3, s0)$
+g1: kronecker_product(%i*s2, s1)$
+g2: kronecker_product(%i*s2, s2)$
+g3: kronecker_product(%i*s2, s3)$
+
+/* BLOCK DSLASH - Start */
+
+Dslash(Ap) := 
+block([],
+    
+DAp :  factor(j*k*g0.Ap+diff(g1.Ap,x)+diff(g2.Ap,y)+diff(g3.Ap,z))
+)$
+
+/* BLOCK DSLASH - End */
+
+/* d-slash matrix */
+
+print("")$
+print("The d-slash matrix is:")$
+g0d0: g0*d0$
+g1d1: g1*d1$
+g2d2: g2*d2$
+g3d3: g3*d3$
+
+dslash: g0d0 + g1d1 + g2d2 + g3d3;
+
+/* d-slash^2 */
+
+print("")$
+print("Now we print the d-slash^2 matrix:")$
+
+dslash2: dslash.dslash;
+
+/* Nabla */
+
+print("")$
+print("Nabla as Pauli matrix in rectangular coordinates:")$
+Np: d1*s1 + d2*s2 + d3*s3;
+
+/* Nabla^2 */
+
+print("")$
+print("Nabla^2 is:")$
+Np2: Np.Np;
+
+print("")$
+print("Then we can write:")$
+print('dslash2," = -",matrix([%nabla^2 - %sigma[0].d0^2, 0], [0, %nabla^2 - %sigma[0].d0^2]))$
+
+print("_______________________________________________")$
+print("")$
+print("The vector E and H in general depend on x,y,z,")$
+depends([Ex,Ey,Ez],[x,y,z]);
+depends([Hx,Hy,Hz],[x,y,z]);
+
+print("")$
+print("Field Quadrivector")$
+F: matrix([Ez],[Ex+%i * Ey],[%i * %eta *Hz],[%i*%eta*(Hx + %i*Hy)]);
+
+print("")$
+print("Source Quadrivector")$
+J: matrix([Jz],[Jx+%i * Jy],[%rho*v],[0]);
+
+print("")$
+print("Application of the d-slash operator on the Field")$
+Ap : rectform(F)$
+Dslash(Ap)$
+DAp1 : DAp;
+print("")$
+
+print("EXAMPLE")$
+print("")$
+print("Let's consider the E field and the H field as follow:")$
+print("")$
+
+Ex: 2*x^2+z;
+Ey: x+y;
+Ez: y^2+3*z;
+
+print("")$
+
+Hx: x+y^2;
+Hy: 3*x;
+Hz: 2*x+z^2;
+
+print("")$
+print("The field quadrivector become:")$
+F: matrix([Ez],[Ex+%i * Ey],[%i * %eta *Hz],[%i*%eta*(Hx + %i*Hy)]);
+
+print("")$
+print("Now we can compute the d-slash operator on this Field:")$
+
+Ap : rectform(F)$
+Dslash(Ap)$
+DAp1 : DAp;
+
+print("End")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
