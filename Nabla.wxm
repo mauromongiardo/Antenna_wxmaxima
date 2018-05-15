@@ -1,0 +1,114 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 16.04.2 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+depends([h11,h12,h21,h22],[x,y,z])$
+A : matrix([h11,h12],[h21,h22])$
+
+/* BLOCK NABLARECT - Start */
+
+Nablarect(H) :=
+block([],
+
+NH11 : diff(H[1,1],z)+diff(H[2,1],x)-%i*diff(H[2,1],y),
+NH12 : diff(H[1,2],z)+diff(H[2,2],x)-%i*diff(H[2,2],y),
+NH21 :-diff(H[2,1],z)+diff(H[1,1],x)+%i*diff(H[1,1],y),
+NH22 :-diff(H[2,2],z)+diff(H[1,2],x)+%i*diff(H[1,2],y),
+
+NH : factor(matrix([NH11, NH12],[NH21, NH22]))    
+)$
+
+/* BLOCK NABLARECT - End */
+
+/* Pauli matricies */
+
+%sigma[0] : matrix([1,0],[0,1])$
+%sigma[1] : matrix([0,1],[1,0])$
+%sigma[2] : matrix([0,-%i],[%i,0])$
+%sigma[3] : matrix([1,0],[0,-1])$
+
+print("_________________________________________________")$
+print("Nabla as Pauli matrix in rectangular coordinates")$
+Np : dx * %sigma[1] + dy * %sigma[2] + dz * %sigma[3];
+
+print("")$
+print("Given a generic vector v")$
+depends([vx, vy, vz],[x, y, z])$
+v : [vx, vy, vz];
+print("")$
+print("we can write it as Pauli matrix and its general form is:")$
+Vp : vx*%sigma[1] + vy*%sigma[2] + vz*%sigma[3];
+print("")$
+print("Now we can apply the Nabla operator on vector v performing the matrix product between Np and Vp:")$
+NVp: Nablarect(Vp);
+print("")$
+print("EXAMPLE 1")$
+print("Taking the following vector:")$
+
+/* Vector v coordinates */
+
+vx : 3*z+y$
+vy : 2*x^2$
+vz : y^2+z$
+
+
+/*vx : 0$
+vy : 0$
+vz : (1/(sqrt(x^2+y^2+z^2)))*exp(-%i*k*sqrt(x^2+y^2+z^2))$*/
+
+v : [vx, vy, vz];
+print("")$
+print("it can be written as Pauli matrix:")$
+Vp : vx*%sigma[1] + vy*%sigma[2] + vz*%sigma[3];
+print("")$
+print("Nabla operator on vector v:")$
+NVp : Nablarect(Vp);
+print("")$
+
+print("Now we want to perform the grade separation.")$
+
+/* BLOCK GRADESEP - Start */
+
+Gradesep(M) := 
+block([],
+
+Mr : realpart(M), /* print("real part") */
+Mi : imagpart(M), /* print("imaginary part") */
+    
+print("GRADE 0"),
+a0r : ratsimp(1/2*(Mr[1,1]+Mr[2,2])),
+print('a0r," = ",a0r),
+print("GRADE 1"),
+a1r : ratsimp(1/2*(Mr[1,2]+Mr[2,1])),
+print('a1r," = ",a1r),
+a2r : ratsimp(1/2*(Mi[2,1]-Mi[1,2])),
+print('a2r," = ",a2r),
+a3r : ratsimp(1/2*(Mr[1,1]-Mr[2,2])),
+print('a3r," = ",a3r),
+print("GRADE 2"),
+B1r : ratsimp(1/2*(Mi[1,2]+Mi[2,1])),
+print('B1r," = ",B1r),
+B2r : ratsimp(1/2*(-Mr[2,1]+Mr[1,2])),
+print('B2r," = ",B2r),
+B3r : ratsimp(1/2*(Mi[1,1]-Mi[2,2])),
+print('B3r," = ",B3r),
+t0r : ratsimp(1/2*(Mi[1,1]+Mi[2,2])),
+print("GRADE 3"),
+print('t0r," = ",t0r)
+)$
+
+/* BLOCK GRADESEP - End */
+
+print("Let's perform the grade separation on matrix NVp:")$
+print("")$
+
+M : NVp$
+Gradesep(M)$
+print("")$
+print("End")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
