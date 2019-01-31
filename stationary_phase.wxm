@@ -1,0 +1,21 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+k[z] : sqrt(k^2 - k[x]^2 - k[y]^2);
+fexp : k[x]*x+ k[y]*y+ k[z]*z;
+print("The derivative of the phase term w.r.t. k[x] gives")$
+diff(fexp,k[x]);
+print("The derivative of the phase term w.r.t. k[y] gives")$
+diff(fexp,k[y]);
+print("from the above equations we obtain")$
+x : %alpha*k[x];
+y : %alpha*k[y];
+z : %alpha*k[z];
+print("or equivalently the parameter %alpha is")$
+r/k;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
