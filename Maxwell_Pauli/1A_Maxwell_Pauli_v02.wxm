@@ -1,0 +1,116 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+load(Pauli_v02);
+load(Dirac_v01);
+functions$
+
+print("====================================================")$
+
+
+hat(A):=block([],
+        a11: conjugate(A[2,2]),
+        a12: -conjugate(A[2,1]),
+        a21: -conjugate(A[1,2]),
+        a22: conjugate(A[1,1]),
+        AGI:matrix([a11,a12],[a21,a22])
+)$
+
+tilde(A):=block([],
+        a11: conjugate(A[1,1]),
+        a12: conjugate(A[2,1]),
+        a21: conjugate(A[1,2]),
+        a22: conjugate(A[2,2]),
+        AGI:matrix([a11,a12],[a21,a22])
+)$
+
+bar(A):=block([],
+        a11: (A[2,2]),
+        a12: (-A[1,2]),
+        a21: (-A[2,1]),
+        a22: (A[1,1]),
+        AGI:matrix([a11,a12],[a21,a22])
+)$
+
+/* 3D case */
+/*
+depends([Ex,Ey,Ez],[x,y,z]);
+depends([Hx,Hy,Hz],[x,y,z]);
+
+depends([Cx,Cy,Cz],[x,y,z]);
+depends([%psi],[x,y,z]);
+*/
+
+
+
+partial_m(Ap):=-j*k*%sigma[0].Ap+Nablarect(Ap);
+partial_p(Ap):=j*k*%sigma[0].Ap+Nablarect(Ap);
+
+depends([E,H,J],[x,y,z]);
+
+print("=====================================================")$
+print("MAXWELL'S EQUATIONS")$
+
+print("E field matrix")$
+EP:ratsimp(E[x]*%sigma[1]+E[y]*%sigma[2]+E[z]*%sigma[3]);
+
+print("H field matrix")$
+HP:ratsimp(H[x]*%sigma[1]+H[y]*%sigma[2]+H[z]*%sigma[3]);
+/* EP:ratsimp(Ex*%sigma[1]+Ey*%sigma[2]+Ez*%sigma[3]);*/ 
+
+print("F field matrix")$
+FP :EP +%i*%eta*HP;
+
+Maxwell: partial_p(FP)$
+
+/* Gradesep(Maxwell)$*/
+
+JP : ratsimp(J[x]*%sigma[1]+J[y]*%sigma[2]+J[z]*%sigma[3])$
+sources:%eta*(%rho*v*%sigma[0]-JP);
+
+print("Maxwell's equations with sources")$
+MSP :Maxwell-sources$
+Gradesep(MSP)$
+
+/*
+print("=====================================================")$
+print("Potentials")$
+print("=====================================================")$
+
+depends([A,%Phi],[x,y,z]);
+
+/*
+A[x]:0$ A[z]:0$ A[y]:-%e^(-j*k*z)$
+*/
+AP:ratsimp(A[x]*%sigma[1]+A[y]*%sigma[2]+A[z]*%sigma[3]);
+NAP : Nablarect(AP)$
+divA: ratsimp(mat_trace(NAP)/2);
+%Phi : j* v/k*divA;
+print("Potential satisfying Lorenz Gauge")$
+Apot: v*AP-%Phi*%sigma[0];
+
+Field : partial_m(Apot)$
+
+Gradesep(Field)$
+
+print("=====================================================")$
+print("Potentials sources")$
+print("=====================================================")$
+kill(%Phi)$
+depends([%Phi],[x,y,z]);
+
+Apot: v*AP-%Phi*%sigma[0];
+ppA : ratsimp(partial_p(partial_m(Apot)))$
+ppA :subst(-1,j^2,ppA)$
+Aeq : ppA-sources$
+
+Gradesep(Aeq)$
+*/
+print("end")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

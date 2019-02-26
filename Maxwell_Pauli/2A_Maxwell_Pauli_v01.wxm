@@ -1,0 +1,82 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 11.08.0 ] */
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+
+load(Pauli_v02);
+load(Dirac_v01);
+functions$
+
+partial_m(Ap):=-j*k*%sigma[0].Ap+Nablarect(Ap)$
+partial_p(Ap):=j*k*%sigma[0].Ap+Nablarect(Ap)$
+
+partial_m_cyl(Ap):=-j*k*%sigma[0].Ap+Nablacyl(Ap);
+partial_p_cyl(Ap):=j*k*%sigma[0].Ap+Nablacyl(Ap);
+
+/*depends([E,H,J],[%rho,phi,z]);*/
+depends([E,H,J],[%rho,z]);
+
+print("=====================================================")$
+print("MAXWELL'S EQUATIONS")$
+print("in cylindrical coordinates")$
+print("=====================================================")$
+
+print("E field matrix")$
+EP:ratsimp(E[%rho]*%sigma[%rho]+E[phi]*%sigma[phi]+E[z]*%sigma[3]);
+
+print("H field matrix")$
+HP:ratsimp(H[%rho]*%sigma[%rho]+H[phi]*%sigma[phi]+H[z]*%sigma[3]);
+/* EP:ratsimp(Ex*%sigma[1]+Ey*%sigma[2]+Ez*%sigma[3]);*/ 
+
+print("F field matrix")$
+FP :EP +%i*%eta*HP;
+
+Maxwell: partial_p_cyl(FP)$
+
+
+JP : ratsimp(J[%rho]*%sigma[%rho]+J[phi]*%sigma[phi]+J[z]*%sigma[3])$
+sources:%eta*(%rho*v*%sigma[0]-JP);
+
+print("Maxwell's equations with sources")$
+MSP :Maxwell-sources$
+Gradecyl(MSP)$
+
+/*
+print("=====================================================")$
+print("Potentials")$
+print("=====================================================")$
+
+depends([A,%Phi],[%rho,phi,z]);
+
+AP:ratsimp(A[%rho]*%sigma[%rho]+A[phi]*%sigma[phi]+A[z]*%sigma[3]);
+NAP : Nablacyl(AP)$
+divA: ratsimp(mat_trace(NAP)/2);
+%Phi : trigrat(j* v/k*divA);
+print("Potential satisfying Lorenz Gauge")$
+Apot: v*AP-%Phi*%sigma[0];
+
+
+Field : partial_m_cyl(Apot)$
+
+Gradecyl(Field)$
+
+print("=====================================================")$
+print("Potentials sources")$
+print("=====================================================")$
+kill(%Phi)$
+depends([%Phi],[%rho,phi,z]);
+
+Apot: v*AP-%Phi*%sigma[0];
+ppA : ratsimp(partial_p_cyl(partial_m_cyl(Apot)))$
+ppA :subst(-1,j^2,ppA)$
+Aeq : ppA-sources$
+
+Gradecyl(Aeq)$
+*/
+
+print("end")$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
